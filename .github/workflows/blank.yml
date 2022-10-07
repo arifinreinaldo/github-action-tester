@@ -1,0 +1,14 @@
+name: test CI
+on:
+  push:
+    tags: v1.**
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Echo Tag
+      run: |
+        git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+        git tag -l --format='%(contents:subject)' ${GITHUB_REF#refs/*/}
